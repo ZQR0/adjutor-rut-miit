@@ -12,7 +12,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class TelegramConfig {
 
     @Bean
-    public TelegramBotsApi telegramBotsApi (AdjutorRutmiitBot adjutorRutmiitBot) throws TelegramApiException {
+    public TelegramBotsApi telegramBotsApi(AdjutorRutmiitBot adjutorRutmiitBot) throws TelegramApiException {
         var api = new TelegramBotsApi(DefaultBotSession.class);
         api.registerBot(adjutorRutmiitBot);
         return api;
