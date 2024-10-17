@@ -1,6 +1,10 @@
 spring:
   application:
     name: AdjutorRUTMIIT_bot
+  liquibase:
+    enabled: true
+    change-log: classpath:database/db.changelog.yml
+    contexts: prod
   datasource:
     url: jdbc:postgresql://localhost:5432/adjutor-db?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
     username: postgres

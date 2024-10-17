@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "users_table", schema = "adjutor_rutmiit")
+@Table(name = "users_table", schema = "adjutor_schema")
 @NoArgsConstructor
 @Setter
 public class UserEntity extends AbstractEntity<Integer> {

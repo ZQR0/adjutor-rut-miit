@@ -1,5 +1,7 @@
 databaseChangeLog:
   - include:
       file: schemas.sql
+      relativeToChangeLogFile: true
   - include:
       file: version-1.0.0/release.changelog.yml
+      relativeToChangeLogFile: true
