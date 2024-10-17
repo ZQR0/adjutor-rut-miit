@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: schemas.sql
+  - include:
+      file: version-1.0.0/release.changelog.yml
