@@ -1,5 +1,30 @@
 spring:
   application:
     name: AdjutorRUTMIIT_bot
+  liquibase:
+    enabled: true
+    change-log: classpath:database/db.changelog.yml
+    contexts: prod
+  datasource:
+    url: jdbc:postgresql://localhost:5432/adjutor-db?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
+    username: postgres
+    password: postgres
+    driver-class-name: "org.postgresql.Driver"
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 15
+      minimum-idle: 10
+      initialization-fail-timeout: 1
+      leak-detection-threshold: 0
+      pool-name: "[HikariPool-adjutor-pool]"
+      register-mbeans: true
+  jpa:
+    show-sql: true
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    hibernate:
+      ddlAuto: none
+
 bot:
+  name: AdjutorRutmiitBot
   token: 7809681850:AAFFmspdXjZl0OivJmZJ_nRGuqs8GiOQGIk

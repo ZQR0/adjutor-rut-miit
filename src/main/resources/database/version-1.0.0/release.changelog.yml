@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: object/user.sql
+      relativeToChangeLogFile: true
+  - include:
+      file: object/group.sql
+      relativeToChangeLogFile: true
