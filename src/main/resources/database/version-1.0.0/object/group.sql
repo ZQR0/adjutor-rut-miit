@@ -2,7 +2,7 @@
 
 --changeset yaroslav:group-1
 CREATE TABLE IF NOT EXISTS adjutor_schema.groups_table (
-    group_id                  INTEGER         NOT NULL        GENERATED ALWAYS AS IDENTITY,
+    group_id            INTEGER         NOT NULL        GENERATED ALWAYS AS IDENTITY,
     group_name          VARCHAR(100)    NOT NULL        UNIQUE,
     group_description   VARCHAR(100)    NOT NULL        UNIQUE,
     join_link           VARCHAR(500)    NOT NULL,
