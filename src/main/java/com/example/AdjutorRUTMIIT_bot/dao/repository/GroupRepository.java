@@ -29,4 +29,7 @@ public interface GroupRepository {
 
     // TODO: реализовать данный метод Артёму, в файле GroupRepositoryImpl
     //Optional<GroupEntity> safeDeleteByGroupName(String groupName);
+
+    // TODO: Артёму это тоже дописать в тот же файл
+    //Optional<List<GroupEntity>> findAllCounted(int count);
 }

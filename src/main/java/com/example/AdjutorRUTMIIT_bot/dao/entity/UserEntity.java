@@ -17,9 +17,9 @@ public class UserEntity extends AbstractEntity<Integer> {
     private Integer id;
     private String firstName; // Имя
     private String lastName; // Фамилия
-    private String phoneNumber;
+    private String phoneNumber; // номер телефона
     private String patronymic; // Отчество
-    private String role;
+    private String role; // роль
     private String SNILS; //СНИЛС
     private LocalDate registrationDate;
     private List<GroupEntity> groups;
@@ -105,7 +105,6 @@ public class UserEntity extends AbstractEntity<Integer> {
         private String role;
         private String SNILS;
         private LocalDate registrationDate;
-        private List<GroupEntity> groups;
 
         public UserEntityBuilder firstName(String firstName) {
             this.firstName = firstName;
@@ -139,11 +138,6 @@ public class UserEntity extends AbstractEntity<Integer> {
 
         public UserEntityBuilder registrationDate(LocalDate registrationDate) {
             this.registrationDate = registrationDate;
-            return this;
-        }
-
-        public UserEntityBuilder groups(List<GroupEntity> groups) {
-            this.groups = groups;
             return this;
         }
 
