@@ -1,10 +1,12 @@
 package com.example.AdjutorRUTMIIT_bot.dao.repository.impl;
 
+import com.example.AdjutorRUTMIIT_bot.dao.entity.GroupEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.entity.UserEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.repository.UserRepository;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -34,5 +36,21 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
         query.setParameter("lastName", secondName);
         query.setParameter("patronymic", patronymic);
         return Optional.of(query.getSingleResult());
+    }
+
+    @Override
+    public Optional<List<GroupEntity>> getAllGroupsWhereUserIsCreator(Integer id) {
+        String queryString = "SELECT * FROM adjutor_schema.groups_table e WHERE e.creator_id=:creatorId";
+        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
+        query.setParameter("creatorId", id);
+        return Optional.of(query.getResultList());
+    }
+
+    @Override
+    public Optional<List<GroupEntity>> getAllGroupsWhereUserIsMember(Integer id) {
+        String queryString = "SELECT * FROM adjutor_schema.groups_table e WHERE e.creator_id<>:creatorId";
+        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
+        query.setParameter("creatorId", id);
+        return Optional.of(query.getResultList());
     }
 }

@@ -1,8 +1,10 @@
 package com.example.AdjutorRUTMIIT_bot.dao.repository;
 
 
+import com.example.AdjutorRUTMIIT_bot.dao.entity.GroupEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.entity.UserEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,11 +31,24 @@ public interface UserRepository {
                                                                    String secondName,
                                                                    String patronymic);
 
+    /**
+     * Метод для получения списка групп, где пользователь является создателем группы
+     * @param id id пользователя
+     * @author Yaroslav Rechkalov
+     */
+    Optional<List<GroupEntity>> getAllGroupsWhereUserIsCreator(Integer id);
+
+    /**
+     * Метод для получения всех групп, где пользователь является просто участником, не создателем
+     * @param id id пользователя
+     * @author Yaroslav Rechkalov
+     * */
+    Optional<List<GroupEntity>> getAllGroupsWhereUserIsMember(Integer id);
+
     // TODO: реализовать данные методы Артёму, в файле UserRepositoryImpl
 //    Optional<UserEntity> safeDeleteByFSP(String firstName,
 //                                         String secondName,
 //                                         String patronymic);
 //    Optional<UserEntity> safeDeleteBySNILS(String SNILS);
-
 
 }

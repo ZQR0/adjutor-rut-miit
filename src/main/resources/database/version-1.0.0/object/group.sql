@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS adjutor_schema.groups_table (
     creation_date_time  TIMESTAMP       NOT NULL        DEFAULT CURRENT_TIMESTAMP,
     updating_date_time  TIMESTAMP       NOT NULL        DEFAULT CURRENT_TIMESTAMP,
     creator_id          INTEGER         NOT NULL,
+    members_ids         INTEGER[]       NOT NULL,
     CONSTRAINT fk_user  FOREIGN KEY (creator_id)        REFERENCES adjutor_schema.users_table(user_id)
 );
 
@@ -26,4 +27,4 @@ $$ language 'plpgsql';
 
 
 -- updating trigger
-CREATE TRIGGER updating_date_trigger_notes_table BEFORE UPDATE ON adjutor_schema.groups_table FOR EACH ROW EXECUTE PROCEDURE update_modified_column();
+CREATE TRIGGER updating_date_trigger_groups_table BEFORE UPDATE ON adjutor_schema.groups_table FOR EACH ROW EXECUTE PROCEDURE update_modified_column();

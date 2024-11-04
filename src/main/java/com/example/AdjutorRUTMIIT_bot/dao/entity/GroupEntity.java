@@ -8,6 +8,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "groups_table", schema = "adjutor_schema")
@@ -23,6 +26,7 @@ public class GroupEntity extends AbstractEntity<Integer> {
     private LocalDateTime updatingDateTime;
     private UserEntity creator;
     private Integer creatorId;
+    private Set<Integer> membersIds;
 
     public GroupEntity(
             String groupName,
@@ -41,6 +45,8 @@ public class GroupEntity extends AbstractEntity<Integer> {
         this.updatingDateTime = updatingDateTime;
         this.creator = creator;
         this.creatorId = creatorId;
+        this.membersIds = new HashSet<>();
+        membersIds.add(creatorId);
     }
 
     @Id
@@ -82,6 +88,16 @@ public class GroupEntity extends AbstractEntity<Integer> {
     @JoinColumn(name = "creator_id_fk", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
     public UserEntity getCreator() {
         return creator;
+    }
+
+    @Column(name = "creator_id", columnDefinition = "integer", nullable = false)
+    public Integer getCreatorId() {
+        return creatorId;
+    }
+
+    @Column(name = "members_ids", columnDefinition = "integer[]", nullable = false)
+    public Set<Integer> getMembersIds() {
+        return membersIds;
     }
 
     public static GroupEntityBuilder builder() {
