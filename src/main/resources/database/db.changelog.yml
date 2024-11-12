@@ -1,8 +1,5 @@
 databaseChangeLog:
   - include:
-      file: database.sql
-      relativeToChangeLogFile: true
-  - include:
       file: schemas.sql
       relativeToChangeLogFile: true
   - include:
