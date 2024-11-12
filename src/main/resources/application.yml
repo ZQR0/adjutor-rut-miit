@@ -1,6 +1,11 @@
+server:
+  port: 8888
+
 spring:
   application:
     name: AdjutorRUTMIIT_bot
+  mvc:
+    static-path-pattern: /static/**
   liquibase:
     enabled: true
     change-log: classpath:database/db.changelog.yml

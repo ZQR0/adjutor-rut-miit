@@ -85,15 +85,11 @@ public class GroupEntity extends AbstractEntity<Integer> {
     }
 
     @ManyToOne
-    @JoinColumn(name = "creator_id_fk", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
+    @JoinColumn(name = "creator_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
     public UserEntity getCreator() {
         return creator;
     }
 
-    @Column(name = "creator_id", columnDefinition = "integer", nullable = false)
-    public Integer getCreatorId() {
-        return creatorId;
-    }
 
     @Column(name = "members_ids", columnDefinition = "integer[]", nullable = false)
     public Set<Integer> getMembersIds() {

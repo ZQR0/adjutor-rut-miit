@@ -88,12 +88,12 @@ public class UserEntity extends AbstractEntity<Integer> {
         return registrationDate;
     }
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     public List<GroupEntity> getGroups() {
         return groups;
     }
 
-    public UserEntityBuilder builder() {
+    public static UserEntityBuilder builder() {
         return new UserEntityBuilder();
     }
 

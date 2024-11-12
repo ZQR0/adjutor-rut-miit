@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping(path = "find-by-id/{id}")
+    @GetMapping(path = "find-by-id", params = "id")
     public ResponseEntity<?> findUserByIdEndpoint(@RequestParam(name = "id") int id)
         throws EntityNotFoundException
     {
@@ -27,7 +27,7 @@ public class UserController {
         );
     }
 
-    @GetMapping(path = "find-by-snils/{snils}")
+    @GetMapping(path = "find-by-snils", params = "id")
     public ResponseEntity<?> findUserBySNILSEndpoint(@RequestParam(name = "snils") String SNILS)
         throws EntityNotFoundException
     {
@@ -37,7 +37,7 @@ public class UserController {
         );
     }
 
-    @GetMapping(path = "find-by-fsp")
+    @GetMapping(path = "find-by-fsp", params = {"first-name", "second-name", "patronymic"})
     public ResponseEntity<?> findByFSPEndpoint(@RequestParam(name = "first-name") String firstName,
                                                @RequestParam(name = "second-name") String secondName,
                                                @RequestParam(name = "patronymic") String patronymic)
