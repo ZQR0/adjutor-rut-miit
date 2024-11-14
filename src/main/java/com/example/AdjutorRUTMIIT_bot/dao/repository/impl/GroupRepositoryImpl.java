@@ -39,7 +39,7 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
     }
 
 
-//    TODO -----------------------
+
     @Override
     public Optional<GroupEntity> safeDeleteByGroupName(String groupName) {
         String queryString = "";

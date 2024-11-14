@@ -54,7 +54,7 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
         return Optional.of(query.getResultList());
     }
 
-    //TODO ----------------------
+
     @Override
     public Optional<UserEntity> safeDeleteByFSP(String firstName, String secondName, String patronymic) {
 
@@ -87,7 +87,7 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
 
     }
 
-    //TODO ----------------------
+
     @Override
     public Optional<UserEntity> safeDeleteBySNILS(String SNILS) {
         //SQL
