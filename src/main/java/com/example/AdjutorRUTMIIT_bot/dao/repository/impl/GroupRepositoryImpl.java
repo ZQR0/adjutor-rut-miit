@@ -37,4 +37,13 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         return Optional.of(query.getResultList());
     }
+
+
+//    TODO -----------------------
+    @Override
+    public Optional<GroupEntity> safeDeleteByGroupName(String groupName) {
+        String queryString = "";
+        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
+        return null;
+    }
 }

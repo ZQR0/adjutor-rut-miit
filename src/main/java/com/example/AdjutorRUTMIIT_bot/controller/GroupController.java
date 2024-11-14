@@ -4,6 +4,7 @@ import com.example.AdjutorRUTMIIT_bot.dto.GroupCreationDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
 import com.example.AdjutorRUTMIIT_bot.service.GroupService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,5 +64,7 @@ public class GroupController {
                 HttpStatus.CREATED
         );
     }
+
+
 
 }

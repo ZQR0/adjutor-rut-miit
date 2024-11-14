@@ -28,5 +28,5 @@ public interface GroupRepository {
     Optional<List<GroupEntity>> getAllGroups();
 
     // TODO: реализовать данный метод Артёму, в файле GroupRepositoryImpl
-    //Optional<GroupEntity> safeDeleteByGroupName(String groupName);
+    Optional<GroupEntity> safeDeleteByGroupName(String groupName);
 }

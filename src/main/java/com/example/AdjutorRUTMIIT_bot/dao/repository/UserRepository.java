@@ -46,9 +46,10 @@ public interface UserRepository {
     Optional<List<GroupEntity>> getAllGroupsWhereUserIsMember(Integer id);
 
     // TODO: реализовать данные методы Артёму, в файле UserRepositoryImpl
-//    Optional<UserEntity> safeDeleteByFSP(String firstName,
-//                                         String secondName,
-//                                         String patronymic);
-//    Optional<UserEntity> safeDeleteBySNILS(String SNILS);
+    Optional<UserEntity> safeDeleteByFSP(String firstName,
+                                         String secondName,
+                                         String patronymic);
+
+    Optional<UserEntity> safeDeleteBySNILS(String SNILS);
 
 }
