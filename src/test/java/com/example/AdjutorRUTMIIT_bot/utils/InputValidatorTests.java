@@ -10,6 +10,8 @@ public class InputValidatorTests {
     private static final String snils = "123-456-789 12";
     private static final String nameOfGroupFalse = "фаврфы-123";
     private static final String snilsFalse = "1231231237234";
+    private static final String banWord = "сучка";
+    private static final String nobanWord = "собака";
 
     @Test
     void checkNameToRegexTest() {
@@ -26,5 +28,13 @@ public class InputValidatorTests {
     @Test
     void checkSnilsFalseToRegexTest(){
         assertThat(InputValidator.checkSnils(snilsFalse)).isFalse();
+    }
+    @Test
+    void checkBadWordsTest(){
+        assertThat(InputValidator.check(banWord)).isFalse();
+    }
+    @Test
+    void checkNoBadWordsTest(){
+        assertThat(InputValidator.check(nobanWord)).isTrue();
     }
 }
