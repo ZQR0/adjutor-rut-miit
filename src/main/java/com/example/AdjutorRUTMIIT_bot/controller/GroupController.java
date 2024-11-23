@@ -23,8 +23,16 @@ public class GroupController {
         );
     }
 
+    @GetMapping(path = "get-all-by-count", params = "count")
+    public ResponseEntity<?> getAllByCount(@RequestParam(name = "count") Integer count) {
+        return new ResponseEntity<>(
+                this.groupService.getFixedCountOfGroups(count),
+                HttpStatus.OK
+        );
+    }
 
-    @GetMapping(path = "by-id/{id}")
+
+    @GetMapping(path = "by-id", params = "id")
     public ResponseEntity<?> findByIdEndpoint(@RequestParam(name = "id") int id)
             throws EntityNotFoundException
     {
@@ -34,7 +42,7 @@ public class GroupController {
         );
     }
 
-    @GetMapping(path = "by-group-name/{groupName}")
+    @GetMapping(path = "by-group-name", params = "groupName")
     public ResponseEntity<?> findByGroupNameEndpoint(@RequestParam(name = "groupName") String groupName)
             throws EntityNotFoundException
     {
@@ -44,7 +52,7 @@ public class GroupController {
         );
     }
 
-    @GetMapping(path = "by-creator-id/{creatorId}")
+    @GetMapping(path = "by-creator-id", params = "creatorId")
     public ResponseEntity<?> findGroupByCreatorId(@RequestParam(name = "creatorId") int creatorId)
         throws EntityNotFoundException
     {
@@ -54,13 +62,33 @@ public class GroupController {
         );
     }
 
-    @PostMapping(path = "create-group")
+    //@PostMapping(path = "create-group")
     public ResponseEntity<?> createGroupEndpoint(@RequestBody GroupCreationDTO dto)
         throws EntityNotFoundException
     {
         return new ResponseEntity<>(
                 this.groupService.createGroup(dto),
                 HttpStatus.CREATED
+        );
+    }
+
+    @DeleteMapping(path = "delete/by-id", params = "id")
+    public ResponseEntity<?> safeDeleteById(@RequestParam(name = "id") int id)
+        throws EntityNotFoundException
+    {
+        return new ResponseEntity<>(
+                this.groupService.safeDeleteGroupById(id),
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping(path = "delete/by-group-name", params = "groupName")
+    public ResponseEntity<?> safeDeleteByGroupName(@RequestParam(name = "groupName") String groupName)
+        throws EntityNotFoundException
+    {
+        return new ResponseEntity<>(
+                this.groupService.safeDeleteGroupByGroupName(groupName),
+                HttpStatus.OK
         );
     }
 

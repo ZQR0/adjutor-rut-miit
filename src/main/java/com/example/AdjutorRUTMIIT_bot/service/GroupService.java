@@ -36,6 +36,12 @@ public interface GroupService {
     List<GroupDTO> getAllGroups();
 
     /**
+     * Метод для получения фиксированного кол-ва групп из репозитория
+     * @param count кол-во групп, которые вернёт репозиторий SQL-кодом
+     * */
+    List<GroupDTO> getFixedCountOfGroups(int count);
+
+    /**
      * Метод для удаления группы по Id
      * @param id id группы
      * @author Yaroslav Rechkalov
@@ -48,4 +54,12 @@ public interface GroupService {
      * @author Yaroslav Rechkalov
      * */
     GroupDTO createGroup(GroupCreationDTO dto) throws EntityNotFoundException;
+
+    /**
+     * Метод для безопасного удаления группы.
+     * Для удаления сущности просто ставим параметру is_deleted значение true в базе данных
+     * @param groupName имя группы
+     * @author Yaroslav Rechkalov
+     * */
+    GroupDTO safeDeleteGroupByGroupName(String groupName) throws EntityNotFoundException;
 }

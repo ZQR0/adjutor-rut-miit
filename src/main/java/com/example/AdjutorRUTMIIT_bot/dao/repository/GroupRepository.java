@@ -24,9 +24,20 @@ public interface GroupRepository {
     /**
      * Метод для получения вообще всех групп (в будущем будет добавлено ограничение по кол-ву групп,
      * но уже в другом методе)
+     * ИСПОЛЬЗОВАТЬ ОЧЕНЬ ОСТОРОЖНО!!!
      * */
     Optional<List<GroupEntity>> getAllGroups();
 
-    // TODO: реализовать данный метод Артёму, в файле GroupRepositoryImpl
-    //Optional<GroupEntity> safeDeleteByGroupName(String groupName);
+    /**
+     * Метод для получения фиксированного кол-ва групп
+     * @param count кол-во групп
+     * @author Yaroslav Rechkalov
+     * */
+    Optional<List<GroupEntity>> getFixedCountOfGroups(int count);
+
+    /**
+     * Метод для безопасного удаления группы
+     * @param groupName имя группы
+     * */
+    Optional<GroupEntity> safeDeleteByGroupName(String groupName);
 }

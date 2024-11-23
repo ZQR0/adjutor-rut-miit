@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity(name = "user_entity")
 @Table(name = "users_table", schema = "adjutor_schema")
 @NoArgsConstructor
 @Setter

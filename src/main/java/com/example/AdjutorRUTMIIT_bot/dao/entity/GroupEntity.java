@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity
+@Entity(name = "group_entity")
 @Table(name = "groups_table", schema = "adjutor_schema")
 @NoArgsConstructor
 @Setter

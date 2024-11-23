@@ -18,7 +18,9 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
 
     @Override
     public Optional<UserEntity> findBySNILS(String SNILS) {
-        String queryString = "SELECT u FROM adjutor_schema.users_table u WHERE u.SNILS=:snils";
+        String queryString =
+                "SELECT e FROM adjutor_schema.users_table e " +
+                "WHERE e.snils=:snils";
         TypedQuery<UserEntity> query = this.entityManager.createQuery(queryString, UserEntity.class);
         query.setParameter("snils", SNILS);
 
@@ -27,9 +29,11 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
 
     @Override
     public Optional<UserEntity> findByFirstNameAndSecondNameAndPatronymic(String firstName, String secondName, String patronymic) {
-        String queryString = "SELECT u FROM adjutor_schema.users_table u WHERE u.first_name=:firstName " +
-                "AND u.last_name=:lastName " +
-                "AND u.patronymic=:patronymic";
+        String queryString =
+                "SELECT u FROM adjutor_schema.user_entity u " +
+                "WHERE u.first_name=':firstName'  " +
+                "AND u.last_name=':lastName' " +
+                "AND u.patronymic=':patronymic';";
 
         TypedQuery<UserEntity> query = this.entityManager.createQuery(queryString, UserEntity.class);
         query.setParameter("firstName", firstName);
@@ -40,7 +44,11 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
 
     @Override
     public Optional<List<GroupEntity>> getAllGroupsWhereUserIsCreator(Integer id) {
-        String queryString = "SELECT * FROM adjutor_schema.groups_table e WHERE e.creator_id=:creatorId";
+        String queryString =
+                "SELECT * FROM adjutor_schema.groups_table e " +
+                "WHERE e.creator_id=:creatorId " +
+                "AND WHERE is_deleted = FALSE;";
+
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("creatorId", id);
         return Optional.of(query.getResultList());
@@ -48,9 +56,39 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
 
     @Override
     public Optional<List<GroupEntity>> getAllGroupsWhereUserIsMember(Integer id) {
-        String queryString = "SELECT * FROM adjutor_schema.groups_table e WHERE e.creator_id<>:creatorId";
+        String queryString =
+                "SELECT * FROM adjutor_schema.groups_table e " +
+                "WHERE e.creator_id<>:creatorId " +
+                "AND WHERE is_deleted = FALSE;";
+
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("creatorId", id);
         return Optional.of(query.getResultList());
+    }
+
+    @Override
+    public Optional<UserEntity> safeDeleteByFSP(String firstName, String secondName, String patronymic) {
+        String queryString = "UPDATE adjutor_schema.users_table " +
+                "SET is_deleted = TRUE " +
+                "WHERE first_name = :firstName " +
+                "AND last_name=:secondName " +
+                "AND patronymic=:patronymic;";
+        TypedQuery<UserEntity> query = this.entityManager.createQuery(queryString, UserEntity.class);
+        query.setParameter("firstName", firstName);
+        query.setParameter("secondName", secondName);
+        query.setParameter("patronymic", patronymic);
+        return Optional.of(query.getSingleResult());
+    }
+
+    @Override
+    public Optional<UserEntity> safeDeleteBySNILS(String SNILS) {
+        String queryString =
+                "UPDATE adjutor_schema.users_table " +
+                "SET is_deleted = TRUE " +
+                "WHERE snils=:snils;";
+
+        TypedQuery<UserEntity> query = this.entityManager.createQuery(queryString, UserEntity.class);
+        query.setParameter("snils", SNILS);
+        return Optional.of(query.getSingleResult());
     }
 }

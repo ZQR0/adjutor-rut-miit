@@ -56,13 +56,31 @@ public class GroupServiceImpl implements GroupService {
         return null;
     }
 
+    @Override
+    public List<GroupDTO> getFixedCountOfGroups(int count) {
+        List<GroupEntity> groupEntities = this.repository.getFixedCountOfGroups(count).get();
+        if (!groupEntities.isEmpty()) {
+            return groupEntities.stream()
+                    .map(GroupEntityToGroupDTOMapper::map)
+                    .toList();
+        }
+
+        return null;
+    }
+
 
     // TODO: будет дописано после того, как напишут соответствующие методы в репозитории
     @Override
     public GroupDTO safeDeleteGroupById(Integer id) throws EntityNotFoundException {
-        return null;
+        GroupEntity entity = this.repository.safeDeleteById(id);
+        if (entity == null) {
+            throw new EntityNotFoundException(String.format("Group entity with id %s not found", id));
+        }
+
+        return GroupEntityToGroupDTOMapper.map(entity);
     }
 
+    //FIXME: неправильная логика создания группы, ПЕРЕДЕЛАТЬ НАХУЙ
     @Override
     public GroupDTO createGroup(GroupCreationDTO dto) throws EntityNotFoundException {
         GroupEntity entity = GroupEntity.builder()
@@ -77,6 +95,14 @@ public class GroupServiceImpl implements GroupService {
 
         this.repository.save(entity);
         log.info(String.format("Group entity with id %s saved", entity.getId()));
+
+        return GroupEntityToGroupDTOMapper.map(entity);
+    }
+
+    @Override
+    public GroupDTO safeDeleteGroupByGroupName(String groupName) throws EntityNotFoundException {
+        GroupEntity entity = this.repository.safeDeleteByGroupName(groupName)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Group entity with group name %s not found", groupName)));
 
         return GroupEntityToGroupDTOMapper.map(entity);
     }

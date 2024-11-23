@@ -1,7 +1,9 @@
 package com.example.AdjutorRUTMIIT_bot.service;
 
+import com.example.AdjutorRUTMIIT_bot.dto.UserGroupsDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.UserRegistrationDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.UserDTO;
+import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
 
 public interface UserService {
 
@@ -10,14 +12,14 @@ public interface UserService {
      * @param id идентификатор пользователя
      * @author Yaroslav
      * */
-    UserDTO findUserById(Integer id) throws Exception;
+    UserDTO findUserById(Integer id) throws EntityNotFoundException;
 
     /**
      * Метод для поиска пользователя по СНИЛС
      * @param SNILS СНИСЛ пользователя
      * @author Yaroslav
      * */
-    UserDTO findUserBySNILS(String SNILS) throws Exception;
+    UserDTO findUserBySNILS(String SNILS) throws EntityNotFoundException;
 
     /**
      * Метод для поиска пользователя по ФИО
@@ -28,7 +30,7 @@ public interface UserService {
      * */
     UserDTO findUserByFirstNameAndSecondNameAndPatronymic(String firstName,
                                                           String secondName,
-                                                          String patronymic) throws Exception;
+                                                          String patronymic) throws EntityNotFoundException;
 
     /**
      * Метод для сохранения нового пользователя (фактически регистрация)
@@ -42,7 +44,7 @@ public interface UserService {
      * @param id id пользователя
      * @author Yaroslav Rechkalov
      * */
-    UserDTO safeDeleteUserById(Integer id);
+    UserDTO safeDeleteUserBySNILS(String SNILS) throws EntityNotFoundException;
 
     /**
      * Метод для безопасного удаления пользователя по ФИО
@@ -51,11 +53,20 @@ public interface UserService {
      * @param patronymic Отчество
      * @author Yaroslav Rechkalov
      * */
-    UserDTO safeDeleteUserByFSP(String firstName, String secondName, String patronymic);
+    UserDTO safeDeleteUserByFSP(String firstName, String secondName, String patronymic) throws EntityNotFoundException;
 
-    //TODO
-//    UserDTO safeDeleteByFSP(String firstName,
-//                                         String secondName,
-//                                         String patronymic);
-//    UserDTO safeDeleteBySNILS(String SNILS);
+    /**
+     * Метод для получения всех групп пользователя, где он является создателем группы
+     * @param userId id пользователя
+     * @author Yaroslav Rechkalov
+     * */
+    UserGroupsDTO getAllGroupsWhereUserIsCreator(Integer userId) throws EntityNotFoundException;
+
+    /**
+     * Метод для получения всех групп пользователя, где он он является просто участником (не создателем)
+     * @param userId id пользователя
+     * @author Yaroslav Rechkalov
+     * */
+    UserGroupsDTO getAllGroupsWhereUserIsMember(Integer userId) throws EntityNotFoundException;
+
 }

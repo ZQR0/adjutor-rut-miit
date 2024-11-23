@@ -45,10 +45,21 @@ public interface UserRepository {
      * */
     Optional<List<GroupEntity>> getAllGroupsWhereUserIsMember(Integer id);
 
-    // TODO: реализовать данные методы Артёму, в файле UserRepositoryImpl
-//    Optional<UserEntity> safeDeleteByFSP(String firstName,
-//                                         String secondName,
-//                                         String patronymic);
-//    Optional<UserEntity> safeDeleteBySNILS(String SNILS);
+    /**
+     * Метод для безопасного удаления пользователя по ФИО. Процесс удаления заключён в том, что
+     * в записи базы данных соответствующего пользователя значение is_deleted устанавливается true
+     * @param firstName имя
+     * @param secondName Фамилия
+     * @param patronymic Отчество
+     * */
+    Optional<UserEntity> safeDeleteByFSP(String firstName,
+                                         String secondName,
+                                         String patronymic);
+
+    /**
+     * Метод для безопасного удаления пользователя по СНИЛС
+     * @param SNILS СНИЛС пользователя
+     * */
+    Optional<UserEntity> safeDeleteBySNILS(String SNILS);
 
 }
