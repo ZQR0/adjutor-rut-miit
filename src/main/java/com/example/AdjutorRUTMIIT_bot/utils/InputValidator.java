@@ -25,4 +25,10 @@ public class InputValidator {
         Matcher matcher = pattern.matcher(snils);
         return matcher.matches();
     }
+    public static boolean checkNumber(String num) {
+        String regex = "^\\+\\d{1} \\d{3} \\d{3} \\d{2} \\d{2}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(num);
+        return matcher.matches();
+    }
 }
