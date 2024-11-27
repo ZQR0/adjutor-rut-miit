@@ -14,32 +14,33 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 
-@Service
+@Deprecated
+//@Service
 @RequiredArgsConstructor
 @Slf4j
-public class AdminServiceImpl implements AdminService {
+public class AdminServiceImpl {
 
-    private final UserRepositoryImpl repository;
+    //private final UserRepositoryImpl repository;
 
-    @Override
-    public UserDTO createUserByAdmin(UserCreationDTO dto) throws UniqueEntityAlreadyExistsException {
-        boolean isUserExists = this.repository.findBySNILS(dto.getSNILS()).isPresent();
-        if (isUserExists) {
-            log.info(String.format("User with SNILS %s already exists", dto.getSNILS()));
-            throw new UniqueEntityAlreadyExistsException(String.format("User with SNILS %s already exists", dto.getSNILS()));
-        }
-
-        UserEntity entity = UserEntity.builder()
-                .firstName(dto.getFirstName())
-                .lastName(dto.getSecondName())
-                .patronymic(dto.getPatronymic())
-                .phoneNumber(dto.getPhoneNumber())
-                .role(dto.getRole())
-                .SNILS(dto.getSNILS())
-                .groups(Collections.emptyList())
-                .build();
-
-        this.repository.save(entity);
-        return UserEntityToUserDTOMapper.map(entity);
-    }
+//    @Override
+//    public UserDTO createUserByAdmin(UserCreationDTO dto) throws UniqueEntityAlreadyExistsException {
+//        boolean isUserExists = this.repository.findBySNILS(dto.getSNILS()).isPresent();
+//        if (isUserExists) {
+//            log.info(String.format("User with SNILS %s already exists", dto.getSNILS()));
+//            throw new UniqueEntityAlreadyExistsException(String.format("User with SNILS %s already exists", dto.getSNILS()));
+//        }
+//
+//        UserEntity entity = UserEntity.builder()
+//                .firstName(dto.getFirstName())
+//                .lastName(dto.getSecondName())
+//                .patronymic(dto.getPatronymic())
+//                .phoneNumber(dto.getPhoneNumber())
+//                .role(dto.getRole())
+//                .SNILS(dto.getSNILS())
+//                .groups(Collections.emptyList())
+//                .build();
+//
+//        this.repository.save(entity);
+//        return UserEntityToUserDTOMapper.map(entity);
+//    }
 }

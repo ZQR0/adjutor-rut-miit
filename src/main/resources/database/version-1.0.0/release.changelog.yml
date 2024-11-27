@@ -1,13 +1,13 @@
 databaseChangeLog:
-  - include:
-      file: object/user.sql
-      relativeToChangeLogFile: true
+#  - include:
+#      file: object/user.sql
+#      relativeToChangeLogFile: true
   - include:
       file: object/group.sql
       relativeToChangeLogFile: true
-  - include:
-      file: data/default-users.sql
-      relativeToChangeLogFile: true
+#  - include:
+#      file: data/default-users.sql
+#      relativeToChangeLogFile: true
   - include:
       file: data/default-groups.sql
       relativeToChangeLogFile: true

@@ -11,6 +11,7 @@ import java.util.List;
 
 @Builder
 @Setter
+@Deprecated
 public class UserDTO {
 
     private Integer id;

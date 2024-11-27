@@ -16,37 +16,29 @@ import java.util.Set;
 @Table(name = "groups_table", schema = "adjutor_schema")
 @NoArgsConstructor
 @Setter
+
 public class GroupEntity extends AbstractEntity<Integer> {
 
     private int id;
     private String groupName;
     private String groupDescription;
     private String joinLink;
+    private Boolean isDeleted;
     private LocalDateTime creationDateTime;
     private LocalDateTime updatingDateTime;
-    private UserEntity creator;
-    private Integer creatorId;
-    private Set<Integer> membersIds;
 
     public GroupEntity(
             String groupName,
             String groupDescription,
-            String joinLink,
-            LocalDateTime creationDateTime,
-            LocalDateTime updatingDateTime,
-            UserEntity creator,
-            Integer creatorId
+            String joinLink
+//            UserEntity creator,
+//            Integer creatorId
     )
     {
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.joinLink = joinLink;
-        this.creationDateTime = creationDateTime;
-        this.updatingDateTime = updatingDateTime;
-        this.creator = creator;
-        this.creatorId = creatorId;
-        this.membersIds = new HashSet<>();
-        membersIds.add(creatorId);
+        this.isDeleted = false;
     }
 
     @Id
@@ -72,6 +64,11 @@ public class GroupEntity extends AbstractEntity<Integer> {
         return joinLink;
     }
 
+    @Column(name = "is_deleted", nullable = false)
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
     @CreationTimestamp
     @Column(name = "creation_date_time", nullable = false)
     public LocalDateTime getCreationDateTime() {
@@ -84,17 +81,22 @@ public class GroupEntity extends AbstractEntity<Integer> {
         return updatingDateTime;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "creator_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
-    public UserEntity getCreator() {
-        return creator;
-    }
-
-
-    @Column(name = "members_ids", columnDefinition = "integer[]", nullable = false)
-    public Set<Integer> getMembersIds() {
-        return membersIds;
-    }
+//    @Column(name = "creator_id", insertable = false, updatable = false)
+//    public Integer getCreatorId() {
+//        return creatorId;
+//    }
+//
+//    @ManyToOne
+//    @JoinColumn(name = "creator_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
+//    public UserEntity getCreator() {
+//        return creator;
+//    }
+//
+//
+//    @Column(name = "members_ids", columnDefinition = "integer[]", nullable = false)
+//    public Set<Integer> getMembersIds() {
+//        return membersIds;
+//    }
 
     public static GroupEntityBuilder builder() {
         return new GroupEntityBuilder();
@@ -104,10 +106,7 @@ public class GroupEntity extends AbstractEntity<Integer> {
         private String groupName;
         private String groupDescription;
         private String joinLink;
-        private LocalDateTime creationDateTime;
-        private LocalDateTime updatingDateTime;
-        private UserEntity creator;
-        private Integer creatorId;
+
 
         public GroupEntityBuilder groupName(String groupName) {
             this.groupName = groupName;
@@ -124,35 +123,11 @@ public class GroupEntity extends AbstractEntity<Integer> {
             return this;
         }
 
-        public GroupEntityBuilder creationDateTime(LocalDateTime creationDateTime) {
-            this.creationDateTime = creationDateTime;
-            return this;
-        }
-
-        public GroupEntityBuilder updatingDateTime(LocalDateTime updatingDateTime) {
-            this.updatingDateTime = updatingDateTime;
-            return this;
-        }
-
-        public GroupEntityBuilder creator(UserEntity creator) {
-            this.creator = creator;
-            return this;
-        }
-
-        public GroupEntityBuilder creatorId(Integer id) {
-            this.creatorId = id;
-            return this;
-        }
-
         public GroupEntity build() {
             return new GroupEntity(
                     groupName,
                     groupDescription,
-                    joinLink,
-                    creationDateTime,
-                    updatingDateTime,
-                    creator,
-                    creatorId
+                    joinLink
             );
         }
     }

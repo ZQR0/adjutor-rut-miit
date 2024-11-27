@@ -12,21 +12,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping(path = "api/v1/admin/")
+@Deprecated
+//@RestController
+//@RequestMapping(path = "api/v1/admin/")
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AdminService adminService;
+    //private final AdminService adminService;
 
-    @GetMapping(path = "create-user")
-    public ResponseEntity<UserDTO> createUserEndpoint(@RequestBody UserCreationDTO dto)
-        throws UniqueEntityAlreadyExistsException
-    {
-        return new ResponseEntity<>(
-                this.adminService.createUserByAdmin(dto),
-                HttpStatus.OK
-        );
-    }
+//    @GetMapping(path = "create-user")
+//    public ResponseEntity<UserDTO> createUserEndpoint(@RequestBody UserCreationDTO dto)
+//        throws UniqueEntityAlreadyExistsException
+//    {
+//        return new ResponseEntity<>(
+//                this.adminService.createUserByAdmin(dto),
+//                HttpStatus.OK
+//        );
+//    }
 
 }

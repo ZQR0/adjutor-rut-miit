@@ -11,6 +11,7 @@ import java.util.List;
 
 @Setter
 @Builder
+@Deprecated
 public class UserGroupsDTO {
 
     private List<GroupEntity> groupEntities;

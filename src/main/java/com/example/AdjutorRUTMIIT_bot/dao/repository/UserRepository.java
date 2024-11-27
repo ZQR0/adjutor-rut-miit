@@ -11,6 +11,7 @@ import java.util.Optional;
  * Интерфейс репозитория пользователя, через который будет реализовано взаимодействие
  * с таблицей пользователей в базе данных
  * */
+@Deprecated
 public interface UserRepository {
 
     /**

@@ -2,6 +2,8 @@ package com.example.AdjutorRUTMIIT_bot.controller;
 
 import com.example.AdjutorRUTMIIT_bot.dto.GroupCreationDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
+import com.example.AdjutorRUTMIIT_bot.exception.EntityValidationFailedException;
+import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
 import com.example.AdjutorRUTMIIT_bot.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,13 +25,14 @@ public class GroupController {
         );
     }
 
-    @GetMapping(path = "get-all-by-count", params = "count")
-    public ResponseEntity<?> getAllByCount(@RequestParam(name = "count") Integer count) {
-        return new ResponseEntity<>(
-                this.groupService.getFixedCountOfGroups(count),
-                HttpStatus.OK
-        );
-    }
+    //FIXME: будет фикситься уже после релиза, т.к. не самая важная функция
+//    @GetMapping(path = "get-all-by-count", params = "count")
+//    public ResponseEntity<?> getAllByCount(@RequestParam(name = "count") Integer count) {
+//        return new ResponseEntity<>(
+//                this.groupService.getFixedCountOfGroups(count),
+//                HttpStatus.OK
+//        );
+//    }
 
 
     @GetMapping(path = "by-id", params = "id")
@@ -52,19 +55,19 @@ public class GroupController {
         );
     }
 
-    @GetMapping(path = "by-creator-id", params = "creatorId")
-    public ResponseEntity<?> findGroupByCreatorId(@RequestParam(name = "creatorId") int creatorId)
-        throws EntityNotFoundException
-    {
-        return new ResponseEntity<>(
-                this.groupService.findGroupByCreatorId(creatorId),
-                HttpStatus.OK
-        );
-    }
+//    @GetMapping(path = "by-creator-id", params = "creatorId")
+//    public ResponseEntity<?> findGroupByCreatorId(@RequestParam(name = "creatorId") int creatorId)
+//        throws EntityNotFoundException
+//    {
+//        return new ResponseEntity<>(
+//                this.groupService.findGroupByCreatorId(creatorId),
+//                HttpStatus.OK
+//        );
+//    }
 
-    //@PostMapping(path = "create-group")
+    @PostMapping(path = "create-group")
     public ResponseEntity<?> createGroupEndpoint(@RequestBody GroupCreationDTO dto)
-        throws EntityNotFoundException
+        throws EntityNotFoundException, EntityValidationFailedException, UniqueEntityAlreadyExistsException
     {
         return new ResponseEntity<>(
                 this.groupService.createGroup(dto),

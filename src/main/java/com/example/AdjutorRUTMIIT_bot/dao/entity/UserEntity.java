@@ -8,16 +8,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "user_entity")
-@Table(name = "users_table", schema = "adjutor_schema")
-@NoArgsConstructor
-@Setter
-public class UserEntity extends AbstractEntity<Integer> {
+@Deprecated
+//@Entity(name = "user_entity")
+//@Table(name = "users_table", schema = "adjutor_schema")
+//@NoArgsConstructor
+//@Setter
+public class UserEntity {
 
     private Integer id;
     private String firstName; // Имя
     private String lastName; // Фамилия
     private String phoneNumber;
+    private Boolean isDeleted;
     private String patronymic; // Отчество
     private String role;
     private String SNILS; //СНИЛС
@@ -38,6 +40,7 @@ public class UserEntity extends AbstractEntity<Integer> {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
+        this.isDeleted = false;
         this.patronymic = patronymic;
         this.role = role;
         this.SNILS = SNILS;
@@ -45,50 +48,50 @@ public class UserEntity extends AbstractEntity<Integer> {
         this.groups = new ArrayList<>();
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
-    @Override
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "user_id", nullable = false)
+    //@Override
     public Integer getId() {
         return id;
     }
 
-    @Column(name = "first_name", nullable = false)
+    //@Column(name = "first_name", nullable = false)
     public String getFirstName() {
         return firstName;
     }
 
-    @Column(name = "last_name", nullable = false)
+    //@Column(name = "last_name", nullable = false)
     public String getLastName() {
         return lastName;
     }
 
-    @Column(name = "phone_number", unique = true, nullable = false)
+    //@Column(name = "phone_number", unique = true, nullable = false)
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    @Column(name = "patronymic", nullable = false)
+    //@Column(name = "patronymic", nullable = false)
     public String getPatronymic() {
         return patronymic;
     }
 
-    @Column(name = "role")
+    //@Column(name = "role")
     public String getRole() {
         return role;
     }
 
-    @Column(name = "snils", unique = true)
+    //@Column(name = "snils", unique = true, nullable = false, columnDefinition = "varchar")
     public String getSNILS() {
         return SNILS;
     }
 
-    @Column(name = "registration_date")
+    //@Column(name = "registration_date")
     public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
-    @OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
+    //@OneToMany(mappedBy = "creator", fetch = FetchType.EAGER)
     public List<GroupEntity> getGroups() {
         return groups;
     }
