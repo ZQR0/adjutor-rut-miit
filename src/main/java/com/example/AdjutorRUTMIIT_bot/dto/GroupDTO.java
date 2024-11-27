@@ -2,6 +2,7 @@ package com.example.AdjutorRUTMIIT_bot.dto;
 
 import com.example.AdjutorRUTMIIT_bot.dao.entity.UserEntity;
 import com.example.AdjutorRUTMIIT_bot.utils.GroupCreatorJsonSerializer;
+import com.example.AdjutorRUTMIIT_bot.utils.LocalDateTimeJsonSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
@@ -18,8 +19,8 @@ public class GroupDTO {
     private String joinLink;
     private LocalDateTime creationDateTime;
     private LocalDateTime updatingDateTime;
-    private UserEntity creator;
-    private Integer creatorId;
+//    private UserEntity creator;
+//    private Integer creatorId;
 
     @JsonProperty(namespace = "id")
     public int getId() {
@@ -41,26 +42,29 @@ public class GroupDTO {
         return joinLink;
     }
 
+
+    @JsonSerialize(using = LocalDateTimeJsonSerializer.class)
     @JsonProperty(namespace = "creation_date_time")
     public LocalDateTime getCreationDateTime() {
         return creationDateTime;
     }
 
+    @JsonSerialize(using = LocalDateTimeJsonSerializer.class)
     @JsonProperty(namespace = "updating_date_time")
     public LocalDateTime getUpdatingDateTime() {
         return updatingDateTime;
     }
 
-    @JsonProperty(namespace = "creator")
-    @JsonSerialize(using = GroupCreatorJsonSerializer.class)
-    public UserEntity getCreator() {
-        return creator;
-    }
-
-    @JsonProperty(namespace = "creator_id")
-    public Integer getCreatorId() {
-        return creatorId;
-    }
+//    @JsonProperty(namespace = "creator")
+//    @JsonSerialize(using = GroupCreatorJsonSerializer.class)
+//    public UserEntity getCreator() {
+//        return creator;
+//    }
+//
+//    @JsonProperty(namespace = "creator_id")
+//    public Integer getCreatorId() {
+//        return creatorId;
+//    }
 
 
 }

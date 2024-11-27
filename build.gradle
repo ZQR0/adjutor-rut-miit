@@ -24,6 +24,7 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.telegram/telegrambots-abilities
 	implementation group: 'org.telegram', name: 'telegrambots-abilities', version: '5.3.0'
 
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

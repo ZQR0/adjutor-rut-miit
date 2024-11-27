@@ -17,7 +17,7 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
 
     @Override
     public Optional<GroupEntity> findByGroupName(String groupName) {
-        String queryString = "SELECT g FROM adjutor_schema.groups_table WHERE g.group_name=:groupName";
+        String queryString = "SELECT g FROM group_entity g WHERE g.groupName =: groupName";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("groupName", groupName);
         return Optional.of(query.getSingleResult());
@@ -25,7 +25,7 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
 
     @Override
     public Optional<GroupEntity> findByCreatorId(Integer creatorId) {
-        String queryString = "SELECT g FROM adjutor_schema.groups_table WHERE g.creator_id=:creatorId";
+        String queryString = "SELECT g FROM group_entity g WHERE g.creatorId =: creatorId";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("creatorId", creatorId);
         return Optional.of(query.getSingleResult());
@@ -33,14 +33,14 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
 
     @Override
     public Optional<List<GroupEntity>> getAllGroups() {
-        String queryString = "SELECT * FROM adjutor_schema.groups_table WHERE is_deleted = FALSE;";
+        String queryString = "SELECT e FROM group_entity e WHERE e.isDeleted = FALSE";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         return Optional.of(query.getResultList());
     }
 
     @Override
     public Optional<List<GroupEntity>> getFixedCountOfGroups(int count) {
-        String queryString = "SELECT * FROM adjutor_schema.groups_table WHERE is_deleted = FALSE COUNT(:count);";
+        String queryString = "SELECT count(g) FROM group_entity g WHERE g.isDeleted = FALSE";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("count", count);
         return Optional.of(query.getResultList());
@@ -48,7 +48,7 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
 
     @Override
     public Optional<GroupEntity> safeDeleteByGroupName(String groupName) {
-        String queryString = "UPDATE adjutor_schema.groups_table SET is_deleted = TRUE WHERE group_name = :groupName;";
+        String queryString = "UPDATE group_entity g SET g.isDeleted = TRUE WHERE g.groupName = :groupName;";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("groupName", groupName);
         return Optional.of(query.getSingleResult());

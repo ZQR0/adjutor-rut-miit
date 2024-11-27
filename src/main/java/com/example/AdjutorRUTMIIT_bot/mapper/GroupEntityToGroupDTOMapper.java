@@ -13,8 +13,8 @@ public class GroupEntityToGroupDTOMapper {
                 .joinLink(entity.getJoinLink())
                 .creationDateTime(entity.getCreationDateTime())
                 .updatingDateTime(entity.getUpdatingDateTime())
-                .creator(entity.getCreator())
-                .creatorId(entity.getCreator().getId())
+//                .creator(entity.getCreator())
+//                .creatorId(entity.getCreator().getId())
                 .build();
     }
 

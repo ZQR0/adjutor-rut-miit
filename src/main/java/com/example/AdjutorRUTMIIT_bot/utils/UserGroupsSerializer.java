@@ -10,8 +10,10 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
+@Deprecated
 @Component
 @Slf4j
+//FIXME
 public class UserGroupsSerializer extends JsonSerializer<List<GroupEntity>> {
 
     @Override
@@ -35,12 +37,12 @@ public class UserGroupsSerializer extends JsonSerializer<List<GroupEntity>> {
             jsonGenerator.writeStringField("join_link", entity.getJoinLink());
             jsonGenerator.writeStringField("creation_date_time", entity.toString());
             jsonGenerator.writeStringField("updating_date_time", entity.getUpdatingDateTime().toString());
-            jsonGenerator.writeStringField("creator_id", String.valueOf(entity.getCreator().getId()));
+            //jsonGenerator.writeStringField("creator_id", String.valueOf(entity.getCreator().getId()));
 
             jsonGenerator.writeStartArray();
-            for (Integer id : entity.getMembersIds()) {
-                jsonGenerator.writeString(String.valueOf(id));
-            }
+//            for (Integer id : entity.getMembersIds()) {
+//                jsonGenerator.writeString(String.valueOf(id));
+//            }
             jsonGenerator.writeEndArray();
 
             jsonGenerator.writeEndArray();

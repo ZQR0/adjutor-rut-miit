@@ -5,8 +5,11 @@ import com.example.AdjutorRUTMIIT_bot.dao.repository.impl.GroupRepositoryImpl;
 import com.example.AdjutorRUTMIIT_bot.dto.GroupCreationDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.GroupDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
+import com.example.AdjutorRUTMIIT_bot.exception.EntityValidationFailedException;
+import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
 import com.example.AdjutorRUTMIIT_bot.mapper.GroupEntityToGroupDTOMapper;
 import com.example.AdjutorRUTMIIT_bot.service.GroupService;
+import com.example.AdjutorRUTMIIT_bot.utils.InputValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -82,15 +85,31 @@ public class GroupServiceImpl implements GroupService {
 
     //FIXME: неправильная логика создания группы, ПЕРЕДЕЛАТЬ НАХУЙ
     @Override
-    public GroupDTO createGroup(GroupCreationDTO dto) throws EntityNotFoundException {
+    public GroupDTO createGroup(GroupCreationDTO dto)
+            throws EntityNotFoundException, EntityValidationFailedException, UniqueEntityAlreadyExistsException {
+
+        String groupName = dto.getGroupName();
+
+        if (!InputValidator.checkNameOfGroup(groupName)) {
+            throw new EntityValidationFailedException(String.format("Имя группы не подходит под формат: %s", groupName));
+        }
+
+        if (!InputValidator.checkForbiddenWords(groupName)) {
+            throw new EntityValidationFailedException("Имя группы содержит недопустимые символы");
+        }
+
+        if (!InputValidator.checkForbiddenWords(dto.getGroupDescription())) {
+            throw new EntityValidationFailedException("Описание группы содержит недопустимые символы");
+        }
+
+        if (isGroupAlreadyExistsByName(groupName)) {
+            throw new UniqueEntityAlreadyExistsException(String.format("Группа с именем %s уже существует", groupName));
+        }
+
         GroupEntity entity = GroupEntity.builder()
                 .groupName(dto.getGroupName())
                 .groupDescription(dto.getGroupDescription())
                 .joinLink(dto.getJoinLink())
-                .creationDateTime(dto.getCreationDateTime())
-                .updatingDateTime(dto.getUpdatingDateTime())
-                .creator(dto.getCreator())
-                .creatorId(dto.getCreatorId())
                 .build();
 
         this.repository.save(entity);
@@ -106,4 +125,10 @@ public class GroupServiceImpl implements GroupService {
 
         return GroupEntityToGroupDTOMapper.map(entity);
     }
+
+
+    private boolean isGroupAlreadyExistsByName(String groupName) {
+        return this.repository.findByGroupName(groupName).isPresent();
+    }
+
 }
