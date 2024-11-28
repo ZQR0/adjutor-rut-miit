@@ -3,6 +3,8 @@ package com.example.AdjutorRUTMIIT_bot.service;
 import com.example.AdjutorRUTMIIT_bot.dto.GroupCreationDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.GroupDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
+import com.example.AdjutorRUTMIIT_bot.exception.EntityValidationFailedException;
+import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
 
 import java.util.List;
 
@@ -53,7 +55,8 @@ public interface GroupService {
      * @param dto тело для создания группы (является отдельным классом)
      * @author Yaroslav Rechkalov
      * */
-    GroupDTO createGroup(GroupCreationDTO dto) throws EntityNotFoundException;
+    GroupDTO createGroup(GroupCreationDTO dto) throws EntityNotFoundException, EntityValidationFailedException,
+            UniqueEntityAlreadyExistsException;
 
     /**
      * Метод для безопасного удаления группы.
