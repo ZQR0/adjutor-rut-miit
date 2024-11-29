@@ -14,6 +14,11 @@ public class ErrorDTO {
     private String exceptionMessage;
     private StackTraceElement[] stackTraceElements;
 
+    @JsonProperty(namespace = "status_code")
+    public int getStatusCode() {
+        return statusCode;
+    }
+
     @JsonProperty(namespace = "message")
     public String getExceptionMessage() {
         return exceptionMessage;

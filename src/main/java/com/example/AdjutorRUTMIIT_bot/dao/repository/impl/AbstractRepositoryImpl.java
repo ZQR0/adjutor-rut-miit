@@ -4,7 +4,10 @@ import com.example.AdjutorRUTMIIT_bot.dao.entity.AbstractEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.repository.AbstractRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -32,15 +35,14 @@ public class AbstractRepositoryImpl<T extends AbstractEntity<ID>, ID> implements
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED) // не менять
     public T save(T entity) {
-        if (entity.getId() == null) {
+        if (!this.entityManager.contains(entity)) {
             this.entityManager.persist(entity);
             return entity;
         } else {
-            this.entityManager.merge(entity);
+            return this.entityManager.merge(entity);
         }
-
-        return entity;
     }
 
     @Override

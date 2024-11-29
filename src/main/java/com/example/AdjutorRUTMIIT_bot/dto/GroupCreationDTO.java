@@ -6,21 +6,24 @@ import java.io.Serializable;
 
 public class GroupCreationDTO implements Serializable {
 
+    @JsonProperty(namespace = "group_name")
     private String groupName;
+
+    @JsonProperty(namespace = "group_description")
     private String groupDescription;
+
+    @JsonProperty(namespace = "join_link")
     private String joinLink;
 
-    @JsonProperty(namespace = "group_name")
+
     public String getGroupName() {
         return groupName;
     }
 
-    @JsonProperty(namespace = "group_description")
     public String getGroupDescription() {
         return groupDescription;
     }
 
-    @JsonProperty(namespace = "join_link")
     public String getJoinLink() {
         return joinLink;
     }

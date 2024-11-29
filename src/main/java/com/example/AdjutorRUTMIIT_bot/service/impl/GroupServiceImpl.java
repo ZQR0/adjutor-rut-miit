@@ -12,7 +12,10 @@ import com.example.AdjutorRUTMIIT_bot.service.GroupService;
 import com.example.AdjutorRUTMIIT_bot.utils.InputValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.engine.spi.PersistenceContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -85,23 +88,22 @@ public class GroupServiceImpl implements GroupService {
 
     //FIXME: неправильная логика создания группы, ПЕРЕДЕЛАТЬ НАХУЙ
     @Override
+    @Transactional(isolation = Isolation.DEFAULT)
     public GroupDTO createGroup(GroupCreationDTO dto)
             throws EntityNotFoundException, EntityValidationFailedException, UniqueEntityAlreadyExistsException {
 
         String groupName = dto.getGroupName();
 
+        logCreationIfNull(dto);
+
         if (!InputValidator.checkNameOfGroup(groupName)) {
             throw new EntityValidationFailedException(String.format("Имя группы не подходит под формат: %s", groupName));
         }
 
-        if (!InputValidator.checkForbiddenWords(groupName)) {
-            throw new EntityValidationFailedException("Имя группы содержит недопустимые символы");
-        }
-
-        if (!InputValidator.checkForbiddenWords(dto.getGroupDescription())) {
-            throw new EntityValidationFailedException("Описание группы содержит недопустимые символы");
-        }
-
+//        if (!InputValidator.checkForbiddenWords(groupName)) {
+//            throw new EntityValidationFailedException("Имя группы содержит недопустимые символы");
+//        }
+//
         if (isGroupAlreadyExistsByName(groupName)) {
             throw new UniqueEntityAlreadyExistsException(String.format("Группа с именем %s уже существует", groupName));
         }
@@ -128,7 +130,25 @@ public class GroupServiceImpl implements GroupService {
 
 
     private boolean isGroupAlreadyExistsByName(String groupName) {
-        return this.repository.findByGroupName(groupName).isPresent();
+        try {
+            return findGroupByName(groupName) != null;
+        } catch (EntityNotFoundException ex) {
+            return false;
+        }
+    }
+
+    private void logCreationIfNull(GroupCreationDTO dto) {
+        if (dto.getGroupName() == null) {
+            log.info("Group name is null");
+        }
+
+        if (dto.getGroupDescription() == null) {
+            log.info("Group description is null");
+        }
+
+        if (dto.getJoinLink() == null) {
+            log.info("Join link is null");
+        }
     }
 
 }

@@ -19,7 +19,10 @@ public class WebSecurityConfig {
         throws Exception
     {
 
+        http.csrf(AbstractHttpConfigurer::disable);
+
         http.authorizeHttpRequests(authz -> {
+            authz.requestMatchers("/api/v1/groups/create-group").permitAll();
             authz.anyRequest().permitAll();
         });
 

@@ -2,6 +2,7 @@ package com.example.AdjutorRUTMIIT_bot.dao.repository.impl;
 
 import com.example.AdjutorRUTMIIT_bot.dao.entity.GroupEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.repository.GroupRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +21,12 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
         String queryString = "SELECT g FROM group_entity g WHERE g.groupName =: groupName";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         query.setParameter("groupName", groupName);
-        return Optional.of(query.getSingleResult());
+
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException ex) {
+            return Optional.empty();
+        }
     }
 
     @Override
