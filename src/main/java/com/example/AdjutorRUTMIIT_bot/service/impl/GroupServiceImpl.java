@@ -100,10 +100,10 @@ public class GroupServiceImpl implements GroupService {
             throw new EntityValidationFailedException(String.format("Имя группы не подходит под формат: %s", groupName));
         }
 
-//        if (!InputValidator.checkForbiddenWords(groupName)) {
-//            throw new EntityValidationFailedException("Имя группы содержит недопустимые символы");
-//        }
-//
+        if (!InputValidator.checkForbiddenWords(groupName)) {
+            throw new EntityValidationFailedException("Имя группы содержит недопустимые символы");
+        }
+
         if (isGroupAlreadyExistsByName(groupName)) {
             throw new UniqueEntityAlreadyExistsException(String.format("Группа с именем %s уже существует", groupName));
         }
