@@ -11,7 +11,7 @@ spring:
     change-log: classpath:database/db.changelog.yml
     contexts: prod
   datasource:
-    url: jdbc:postgresql://localhost:5432/adjutor-db?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true
+    url: jdbc:postgresql://localhost:5432/adjutor-db?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true?createDatabaseIfNotExist=true
     username: postgres
     password: postgres
     driver-class-name: "org.postgresql.Driver"
