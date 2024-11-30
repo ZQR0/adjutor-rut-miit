@@ -75,20 +75,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
 
-    // TODO: будет дописано после того, как напишут соответствующие методы в репозитории
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public GroupDTO safeDeleteGroupById(Integer id) throws EntityNotFoundException {
         GroupEntity entity = this.repository.safeDeleteById(id);
-        if (entity == null) {
-            throw new EntityNotFoundException(String.format("Group entity with id %s not found", id));
-        }
 
         return GroupEntityToGroupDTOMapper.map(entity);
     }
 
     //FIXME: неправильная логика создания группы, ПЕРЕДЕЛАТЬ НАХУЙ
     @Override
-    @Transactional(isolation = Isolation.DEFAULT)
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public GroupDTO createGroup(GroupCreationDTO dto)
             throws EntityNotFoundException, EntityValidationFailedException, UniqueEntityAlreadyExistsException {
 
@@ -120,6 +117,7 @@ public class GroupServiceImpl implements GroupService {
         return GroupEntityToGroupDTOMapper.map(entity);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public GroupDTO safeDeleteGroupByGroupName(String groupName) throws EntityNotFoundException {
         GroupEntity entity = this.repository.safeDeleteByGroupName(groupName)

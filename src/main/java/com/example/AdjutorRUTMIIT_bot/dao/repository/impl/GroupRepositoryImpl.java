@@ -5,6 +5,8 @@ import com.example.AdjutorRUTMIIT_bot.dao.repository.GroupRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +41,7 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
 
     @Override
     public Optional<List<GroupEntity>> getAllGroups() {
-        String queryString = "SELECT e FROM group_entity e WHERE e.isDeleted = FALSE";
+        String queryString = "SELECT e FROM group_entity e WHERE e.isDeleted = false";
         TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
         return Optional.of(query.getResultList());
     }
@@ -52,11 +54,24 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
         return Optional.of(query.getResultList());
     }
 
+    //FIXME: подразумевалось, что будет просто ставится поле isDeleted = true, но данный подход почему-то не работает
+    // Поэтому было принято решение написать прямое удаление
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Optional<GroupEntity> safeDeleteByGroupName(String groupName) {
-        String queryString = "UPDATE group_entity g SET g.isDeleted = TRUE WHERE g.groupName = :groupName;";
-        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
-        query.setParameter("groupName", groupName);
-        return Optional.of(query.getSingleResult());
+//        //String queryString = "UPDATE group_entity g SET g.isDeleted = TRUE WHERE g.groupName = :groupName";
+//        String queryString = "UPDATE group_entity SET isDeleted = true WHERE groupName = :groupName";
+//        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
+//        query.setParameter("groupName", groupName);
+//        return Optional.of(query.getSingleResult());
+
+        Optional<GroupEntity> optionalGroupEntity = this.findByGroupName(groupName);
+        if (optionalGroupEntity.isPresent()) {
+            GroupEntity entity = optionalGroupEntity.get();
+            this.entityManager.remove(entity);
+            return Optional.of(entity);
+        } else {
+            return Optional.empty();
+        }
     }
 }

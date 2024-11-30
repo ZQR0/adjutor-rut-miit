@@ -17,6 +17,7 @@ public class GroupDTO {
     private String groupName;
     private String groupDescription;
     private String joinLink;
+    private boolean isDeleted;
     private LocalDateTime creationDateTime;
     private LocalDateTime updatingDateTime;
 //    private UserEntity creator;
@@ -42,6 +43,10 @@ public class GroupDTO {
         return joinLink;
     }
 
+    @JsonProperty(namespace = "is_deleted")
+    public boolean isDeleted() {
+        return isDeleted;
+    }
 
     @JsonSerialize(using = LocalDateTimeJsonSerializer.class)
     @JsonProperty(namespace = "creation_date_time")

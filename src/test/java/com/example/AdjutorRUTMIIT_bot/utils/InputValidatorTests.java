@@ -15,7 +15,7 @@ public class InputValidatorTests {
 
     @Test
     void checkNameToRegexTest() {
-        assertThat(InputValidator.checkName(nameOfGroup)).isTrue();
+        assertThat(InputValidator.checkNameOfGroup(nameOfGroup)).isTrue();
     }
     @Test
     void checkSnilsToRegexTest(){
@@ -31,10 +31,10 @@ public class InputValidatorTests {
     }
     @Test
     void checkBadWordsTest(){
-        assertThat(InputValidator.check(banWord)).isFalse();
+        assertThat(InputValidator.checkForbiddenWords(banWord)).isFalse();
     }
     @Test
     void checkNoBadWordsTest(){
-        assertThat(InputValidator.check(nobanWord)).isTrue();
+        assertThat(InputValidator.checkForbiddenWords(nobanWord)).isTrue();
     }
 }
