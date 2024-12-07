@@ -31,19 +31,9 @@ public class GroupCreatorJsonSerializer extends JsonSerializer<UserEntity> {
         jsonGenerator.writeStringField("first_name", user.getFirstName());
         jsonGenerator.writeStringField("last_name", user.getLastName());
         jsonGenerator.writeStringField("patronymic", user.getPatronymic());
-        jsonGenerator.writeStringField("phone_number", user.getPhoneNumber());
-        jsonGenerator.writeStringField("role", user.getRole());
         jsonGenerator.writeStringField("SNILS", user.getSNILS());
+        jsonGenerator.writeStringField("role", user.getRole());
         jsonGenerator.writeStringField("registration_date", user.getRegistrationDate().toString());
-
-        if (!user.getGroups().isEmpty()) {
-            jsonGenerator.writeStartArray();
-
-            List<GroupEntity> groups = user.getGroups();
-            for (GroupEntity entity : groups) {
-                jsonGenerator.writeString(entity.getGroupName());
-            }
-        }
 
         jsonGenerator.writeEndArray();
     }

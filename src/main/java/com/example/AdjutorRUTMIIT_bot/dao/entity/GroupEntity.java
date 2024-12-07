@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name = "groups_table", schema = "adjutor_schema")
 @NoArgsConstructor
 @Setter
-
 public class GroupEntity extends AbstractEntity<Integer> {
 
     private int id;
@@ -24,6 +23,7 @@ public class GroupEntity extends AbstractEntity<Integer> {
     private String groupDescription;
     private String joinLink;
     private Boolean isDeleted;
+    private Boolean isAddedToList;
     private LocalDateTime creationDateTime;
     private LocalDateTime updatingDateTime;
 
@@ -31,14 +31,12 @@ public class GroupEntity extends AbstractEntity<Integer> {
             String groupName,
             String groupDescription,
             String joinLink
-//            UserEntity creator,
-//            Integer creatorId
-    )
-    {
+    ) {
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.joinLink = joinLink;
         this.isDeleted = false;
+        this.isAddedToList = false;
     }
 
     @Id
@@ -69,6 +67,11 @@ public class GroupEntity extends AbstractEntity<Integer> {
         return isDeleted;
     }
 
+    @Column(name = "is_added_to_list", nullable = false)
+    public Boolean getIsAddedToList() {
+        return isAddedToList;
+    }
+
     @CreationTimestamp
     @Column(name = "creation_date_time", nullable = false)
     public LocalDateTime getCreationDateTime() {
@@ -80,23 +83,6 @@ public class GroupEntity extends AbstractEntity<Integer> {
     public LocalDateTime getUpdatingDateTime() {
         return updatingDateTime;
     }
-
-//    @Column(name = "creator_id", insertable = false, updatable = false)
-//    public Integer getCreatorId() {
-//        return creatorId;
-//    }
-//
-//    @ManyToOne
-//    @JoinColumn(name = "creator_id", referencedColumnName = "user_id", foreignKey = @ForeignKey(name = "creator_id"))
-//    public UserEntity getCreator() {
-//        return creator;
-//    }
-//
-//
-//    @Column(name = "members_ids", columnDefinition = "integer[]", nullable = false)
-//    public Set<Integer> getMembersIds() {
-//        return membersIds;
-//    }
 
     public static GroupEntityBuilder builder() {
         return new GroupEntityBuilder();

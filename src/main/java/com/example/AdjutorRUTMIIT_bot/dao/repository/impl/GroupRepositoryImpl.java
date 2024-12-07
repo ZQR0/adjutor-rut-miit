@@ -59,12 +59,6 @@ public class GroupRepositoryImpl extends AbstractRepositoryImpl<GroupEntity, Int
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public Optional<GroupEntity> safeDeleteByGroupName(String groupName) {
-//        //String queryString = "UPDATE group_entity g SET g.isDeleted = TRUE WHERE g.groupName = :groupName";
-//        String queryString = "UPDATE group_entity SET isDeleted = true WHERE groupName = :groupName";
-//        TypedQuery<GroupEntity> query = this.entityManager.createQuery(queryString, GroupEntity.class);
-//        query.setParameter("groupName", groupName);
-//        return Optional.of(query.getSingleResult());
-
         Optional<GroupEntity> optionalGroupEntity = this.findByGroupName(groupName);
         if (optionalGroupEntity.isPresent()) {
             GroupEntity entity = optionalGroupEntity.get();

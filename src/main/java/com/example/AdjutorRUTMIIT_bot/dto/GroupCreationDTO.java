@@ -1,9 +1,11 @@
 package com.example.AdjutorRUTMIIT_bot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 import java.io.Serializable;
 
+@Getter
 public class GroupCreationDTO implements Serializable {
 
     @JsonProperty(namespace = "group_name")
@@ -15,17 +17,5 @@ public class GroupCreationDTO implements Serializable {
     @JsonProperty(namespace = "join_link")
     private String joinLink;
 
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public String getGroupDescription() {
-        return groupDescription;
-    }
-
-    public String getJoinLink() {
-        return joinLink;
-    }
 
 }
