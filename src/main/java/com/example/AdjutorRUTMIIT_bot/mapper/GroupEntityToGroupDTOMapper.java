@@ -11,10 +11,10 @@ public class GroupEntityToGroupDTOMapper {
                 .groupName(entity.getGroupName())
                 .groupDescription(entity.getGroupDescription())
                 .joinLink(entity.getJoinLink())
+                .isDeleted(entity.getIsDeleted())
                 .creationDateTime(entity.getCreationDateTime())
                 .updatingDateTime(entity.getUpdatingDateTime())
-//                .creator(entity.getCreator())
-//                .creatorId(entity.getCreator().getId())
+                .isAddedToList(entity.getIsAddedToList())
                 .build();
     }
 
