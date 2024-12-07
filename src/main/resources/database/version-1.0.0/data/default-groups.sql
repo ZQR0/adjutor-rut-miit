@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset yaroslav:default-groups-2
+--changeset yaroslav:default-groups-1
 INSERT INTO adjutor_schema.groups_table (group_name, group_description, join_link)
 VALUES ('УВП-111', 'test', 't.me/test');
 
