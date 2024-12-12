@@ -2,7 +2,6 @@ package com.example.AdjutorRUTMIIT_bot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Deprecated
 public class UserCreationDTO {
 
     private String firstName;

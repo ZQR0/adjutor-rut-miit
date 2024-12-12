@@ -1,9 +1,10 @@
 package com.example.AdjutorRUTMIIT_bot.service;
 
-import com.example.AdjutorRUTMIIT_bot.dto.UserGroupsDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.UserRegistrationDTO;
 import com.example.AdjutorRUTMIIT_bot.dto.UserDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
+import com.example.AdjutorRUTMIIT_bot.exception.InvalidSNILSFormatException;
+import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
 
 public interface UserService {
 
@@ -37,7 +38,7 @@ public interface UserService {
      * @param userCreationDTO DTO для представления пользователя в виде промежуточного объекта
      * @author Yaroslav Rechkalov
      * */
-    UserDTO saveUser(UserRegistrationDTO userCreationDTO);
+    UserDTO saveUser(UserRegistrationDTO userCreationDTO) throws UniqueEntityAlreadyExistsException, InvalidSNILSFormatException;
 
     /**
      * Метод для безопасного удаления пользователя по Id
@@ -54,19 +55,5 @@ public interface UserService {
      * @author Yaroslav Rechkalov
      * */
     UserDTO safeDeleteUserByFSP(String firstName, String secondName, String patronymic) throws EntityNotFoundException;
-
-    /**
-     * Метод для получения всех групп пользователя, где он является создателем группы
-     * @param userId id пользователя
-     * @author Yaroslav Rechkalov
-     * */
-    UserGroupsDTO getAllGroupsWhereUserIsCreator(Integer userId) throws EntityNotFoundException;
-
-    /**
-     * Метод для получения всех групп пользователя, где он он является просто участником (не создателем)
-     * @param userId id пользователя
-     * @author Yaroslav Rechkalov
-     * */
-    UserGroupsDTO getAllGroupsWhereUserIsMember(Integer userId) throws EntityNotFoundException;
 
 }
