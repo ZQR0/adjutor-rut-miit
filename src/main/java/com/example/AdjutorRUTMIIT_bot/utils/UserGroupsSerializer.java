@@ -1,6 +1,5 @@
 package com.example.AdjutorRUTMIIT_bot.utils;
 
-import com.example.AdjutorRUTMIIT_bot.dao.entity.GroupEntity;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -10,42 +9,20 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.List;
 
-@Deprecated
 @Component
 @Slf4j
 //FIXME
-public class UserGroupsSerializer extends JsonSerializer<List<GroupEntity>> {
+public class UserGroupsSerializer extends JsonSerializer<List<String>> {
 
     @Override
-    public void serialize(List<GroupEntity> groupEntities,
+    public void serialize(List<String> list,
                           JsonGenerator jsonGenerator,
-                          SerializerProvider serializerProvider)
-            throws IOException
+                          SerializerProvider serializerProvider) throws IOException
     {
-        if (groupEntities != null) {
-            jsonGenerator.writeStartArray();
-        } else {
-            log.info("Group entities is null");
-            return;
-        }
+        jsonGenerator.writeStartArray();
 
-        for (GroupEntity entity : groupEntities) {
-            jsonGenerator.writeStartArray();
-            jsonGenerator.writeStringField("id", String.valueOf(entity.getId()));
-            jsonGenerator.writeStringField("group_name", entity.getGroupName());
-            jsonGenerator.writeStringField("group_description", entity.getGroupDescription());
-            jsonGenerator.writeStringField("join_link", entity.getJoinLink());
-            jsonGenerator.writeStringField("creation_date_time", entity.toString());
-            jsonGenerator.writeStringField("updating_date_time", entity.getUpdatingDateTime().toString());
-            //jsonGenerator.writeStringField("creator_id", String.valueOf(entity.getCreator().getId()));
-
-            jsonGenerator.writeStartArray();
-//            for (Integer id : entity.getMembersIds()) {
-//                jsonGenerator.writeString(String.valueOf(id));
-//            }
-            jsonGenerator.writeEndArray();
-
-            jsonGenerator.writeEndArray();
+        for (String group: list) {
+            jsonGenerator.writeString(group);
         }
 
         jsonGenerator.writeEndArray();
