@@ -5,7 +5,14 @@ spring:
   application:
     name: AdjutorRUTMIIT_bot
   mvc:
-    static-path-pattern: /static/**
+    cors:
+      configs:
+        pattern: /**
+        allowed-origins: "http://localhost:3000"
+        allowed-headers: "*"
+        exposed-headers: ""
+        allowed-methods: "*"
+        allow-credentials: true
   liquibase:
     enabled: true
     change-log: classpath:database/db.changelog.yml

@@ -4,10 +4,12 @@ import com.example.AdjutorRUTMIIT_bot.dao.entity.UserEntity;
 import com.example.AdjutorRUTMIIT_bot.dao.repository.UserRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integer> implements UserRepository {
 
@@ -23,6 +25,12 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<UserEntity, Integ
         TypedQuery<UserEntity> query = this.entityManager.createQuery(queryString, UserEntity.class);
         query.setParameter("snils", SNILS);
 
+//        try {
+//            return Optional.of(query.getSingleResult());
+//        } catch (NoResultException exception) {
+//            log.info("No result found exception caught");
+//            return Optional.empty();
+//        }
         return Optional.of(query.getSingleResult());
     }
 

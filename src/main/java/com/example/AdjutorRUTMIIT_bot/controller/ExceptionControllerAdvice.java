@@ -5,6 +5,7 @@ import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityValidationFailedException;
 import com.example.AdjutorRUTMIIT_bot.exception.InvalidSNILSFormatException;
 import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
+import jakarta.persistence.NoResultException;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,15 @@ public class ExceptionControllerAdvice {
     public ErrorDTO invalidSnilsFormatException(@NonNull InvalidSNILSFormatException exception) {
         return ErrorDTO.builder()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
+                .exceptionMessage(exception.getMessage())
+                .stackTraceElements(exception.getStackTrace())
+                .build();
+    }
+
+    @ExceptionHandler(value = NoResultException.class)
+    public ErrorDTO noResultException(@NonNull NoResultException exception) {
+        return ErrorDTO.builder()
+                .statusCode(HttpStatus.NOT_FOUND.value())
                 .exceptionMessage(exception.getMessage())
                 .stackTraceElements(exception.getStackTrace())
                 .build();

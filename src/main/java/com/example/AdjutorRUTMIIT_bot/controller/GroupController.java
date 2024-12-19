@@ -1,12 +1,14 @@
 package com.example.AdjutorRUTMIIT_bot.controller;
 
 import com.example.AdjutorRUTMIIT_bot.dto.GroupCreationDTO;
+import com.example.AdjutorRUTMIIT_bot.dto.GroupsResponseDTO;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityNotFoundException;
 import com.example.AdjutorRUTMIIT_bot.exception.EntityValidationFailedException;
 import com.example.AdjutorRUTMIIT_bot.exception.UniqueEntityAlreadyExistsException;
 import com.example.AdjutorRUTMIIT_bot.service.GroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +19,12 @@ public class GroupController {
 
     private final GroupService groupService;
 
-    @GetMapping(path = "get-all-groups")
-    public ResponseEntity<?> getAllGroupsEndpoint() {
-        return new ResponseEntity<>(
-                this.groupService.getAllGroups(),
-                HttpStatus.OK
-        );
+    @GetMapping(path = "get-all-groups", produces = MediaType.APPLICATION_JSON_VALUE)
+    public GroupsResponseDTO getAllGroupsEndpoint() {
+        GroupsResponseDTO dto = new GroupsResponseDTO();
+        dto.setGroups(this.groupService.getAllGroups());
+
+        return dto;
     }
 
     //FIXME: будет фикситься уже после релиза, т.к. не самая важная функция
@@ -35,7 +37,7 @@ public class GroupController {
 //    }
 
 
-    @GetMapping(path = "by-id", params = "id")
+    @GetMapping(path = "by-id", params = "id", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findByIdEndpoint(@RequestParam(name = "id") int id)
             throws EntityNotFoundException
     {
@@ -45,7 +47,7 @@ public class GroupController {
         );
     }
 
-    @GetMapping(path = "by-group-name", params = "groupName")
+    @GetMapping(path = "by-group-name", params = "groupName", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findByGroupNameEndpoint(@RequestParam(name = "groupName") String groupName)
             throws EntityNotFoundException
     {
@@ -65,7 +67,9 @@ public class GroupController {
 //        );
 //    }
 
-    @PostMapping(path = "create-group")
+    @PostMapping(path = "create-group",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createGroupEndpoint(@RequestBody GroupCreationDTO dto)
         throws EntityNotFoundException, EntityValidationFailedException, UniqueEntityAlreadyExistsException
     {
@@ -75,7 +79,7 @@ public class GroupController {
         );
     }
 
-    @DeleteMapping(path = "delete/by-id", params = "id")
+    @DeleteMapping(path = "delete/by-id", params = "id", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> safeDeleteById(@RequestParam(name = "id") int id)
         throws EntityNotFoundException
     {
@@ -85,7 +89,7 @@ public class GroupController {
         );
     }
 
-    @DeleteMapping(path = "delete/by-group-name", params = "groupName")
+    @DeleteMapping(path = "delete/by-group-name", params = "groupName", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> safeDeleteByGroupName(@RequestParam(name = "groupName") String groupName)
         throws EntityNotFoundException
     {
